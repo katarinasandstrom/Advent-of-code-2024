@@ -9,7 +9,17 @@ import (
 	"strings"
 )
 
+var slice1 []int
+var slice2 []int
+
 func main() {
+	organiseFile()
+	firstTask()
+	secondTask()
+
+}
+
+func organiseFile() {
 
 	file, err := os.Open("numbers.txt")
 	if err != nil {
@@ -17,9 +27,6 @@ func main() {
 		return
 	}
 	defer file.Close()
-
-	var slice1 []int
-	var slice2 []int
 
 	scanner := bufio.NewScanner(file)
 
@@ -48,6 +55,10 @@ func main() {
 
 	sort.Ints(slice1)
 	sort.Ints(slice2)
+}
+
+func firstTask() {
+
 	fmt.Printf("Slice 1: %d\n ", slice1)
 	fmt.Printf("Slice 2: %d\n", slice2)
 
@@ -60,7 +71,7 @@ func main() {
 
 			sum = slice1[i] - slice2[i]
 			totalSum += sum
-			fmt.Printf("Summa rad %d är %d", i, sum)
+			fmt.Printf("Summa rad %d är %d\n", i, sum)
 		} else {
 
 			sum = slice2[i] - slice1[i]
@@ -70,4 +81,30 @@ func main() {
 	}
 
 	fmt.Printf("Total skillnad: %d\n", totalSum)
+}
+
+func secondTask() {
+	var currentNr int
+	var totalSum int
+
+	var partialSum int
+
+	for i := range slice1 {
+		nrOfTimes := 0
+		currentNr = slice1[i]
+
+		for j := range slice2 {
+			if slice2[j] == currentNr {
+				nrOfTimes++
+			} else {
+				continue
+			}
+
+		}
+		partialSum = nrOfTimes * currentNr
+		totalSum += partialSum
+
+	}
+
+	fmt.Printf("Totalsumman är %d\n", totalSum)
 }
